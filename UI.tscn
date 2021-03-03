@@ -30,13 +30,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="ModeButton" type="OptionButton" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -50.0
+margin_top = 20.0
+margin_right = 50.0
+margin_bottom = 52.0
+text = "Translate"
+items = [ "Translate", null, false, 0, null, "Decode", null, false, 1, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TranslationContainer" type="HBoxContainer" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -492.0
-margin_top = -280.0
+margin_top = -250.0
 margin_right = 492.0
 margin_bottom = 280.0
 custom_constants/separation = 80
@@ -44,69 +59,69 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TranslationContainer"]
 margin_right = 700.0
-margin_bottom = 560.0
+margin_bottom = 534.0
 custom_constants/separation = 10
 
-[node name="EnglishLabel" type="RichTextLabel" parent="HBoxContainer/VBoxContainer"]
+[node name="EnglishLabel" type="RichTextLabel" parent="TranslationContainer/VBoxContainer"]
 margin_right = 700.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 100, 50 )
 text = "Plain Text"
 
-[node name="EnglishBox" type="TextEdit" parent="HBoxContainer/VBoxContainer"]
+[node name="EnglishBox" type="TextEdit" parent="TranslationContainer/VBoxContainer"]
 margin_top = 60.0
 margin_right = 700.0
 margin_bottom = 260.0
 rect_min_size = Vector2( 700, 200 )
 wrap_enabled = true
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="TranslationContainer/VBoxContainer"]
 margin_top = 270.0
 margin_right = 700.0
 margin_bottom = 274.0
 
-[node name="CypherLabel" type="RichTextLabel" parent="HBoxContainer/VBoxContainer"]
+[node name="CypherLabel" type="RichTextLabel" parent="TranslationContainer/VBoxContainer"]
 margin_top = 284.0
 margin_right = 700.0
 margin_bottom = 324.0
 rect_min_size = Vector2( 100, 40 )
 text = "Translated"
 
-[node name="CipherBox" type="TextEdit" parent="HBoxContainer/VBoxContainer"]
+[node name="CipherBox" type="TextEdit" parent="TranslationContainer/VBoxContainer"]
 margin_top = 334.0
 margin_right = 700.0
 margin_bottom = 534.0
 rect_min_size = Vector2( 700, 200 )
 wrap_enabled = true
 
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="TranslationContainer"]
 margin_left = 780.0
 margin_right = 988.0
-margin_bottom = 560.0
+margin_bottom = 534.0
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/CenterContainer"]
-margin_top = 244.0
+[node name="VBoxContainer2" type="VBoxContainer" parent="TranslationContainer/CenterContainer"]
+margin_top = 231.0
 margin_right = 208.0
-margin_bottom = 316.0
+margin_bottom = 303.0
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/CenterContainer/VBoxContainer2"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="TranslationContainer/CenterContainer/VBoxContainer2"]
 margin_right = 208.0
 margin_bottom = 32.0
 
-[node name="Label" type="Label" parent="HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer2"]
+[node name="Label" type="Label" parent="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer2"]
 margin_top = 3.0
 margin_right = 54.0
 margin_bottom = 29.0
 text = "Cypher :"
 
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer2"]
+[node name="CenterContainer" type="CenterContainer" parent="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer2"]
 margin_left = 58.0
 margin_right = 208.0
 margin_bottom = 32.0
 
-[node name="CypherOptions" type="OptionButton" parent="HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer2/CenterContainer"]
+[node name="CypherOptions" type="OptionButton" parent="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer2/CenterContainer"]
 margin_right = 150.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 150, 32 )
@@ -114,33 +129,84 @@ text = "Caesar"
 items = [ "Caesar", null, false, 0, null ]
 selected = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/CenterContainer/VBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TranslationContainer/CenterContainer/VBoxContainer2"]
 margin_top = 36.0
 margin_right = 208.0
 margin_bottom = 72.0
 
-[node name="VSeparator" type="VSeparator" parent="HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
 margin_right = 21.0
 margin_bottom = 36.0
 rect_min_size = Vector2( 21, 0 )
 
-[node name="Label" type="Label" parent="HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer"]
+[node name="Label" type="Label" parent="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer"]
 margin_left = 25.0
 margin_top = 5.0
 margin_right = 56.0
 margin_bottom = 31.0
 text = "Key: "
 
-[node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer"]
+[node name="CenterContainer2" type="CenterContainer" parent="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer"]
 margin_left = 60.0
 margin_right = 106.0
 margin_bottom = 36.0
 
-[node name="KeyEdit" type="LineEdit" parent="HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer/CenterContainer2"]
+[node name="KeyEdit" type="LineEdit" parent="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer/CenterContainer2"]
 margin_right = 46.0
 margin_bottom = 36.0
 placeholder_text = "0"
-[connection signal="text_changed" from="HBoxContainer/VBoxContainer/EnglishBox" to="." method="_on_EnglishBox_text_changed"]
-[connection signal="text_changed" from="HBoxContainer/VBoxContainer/CipherBox" to="." method="_on_CipherBox_text_changed"]
-[connection signal="text_changed" from="HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer/CenterContainer2/KeyEdit" to="." method="_on_LineEdit_text_changed"]
+
+[node name="DecodeContainer" type="HBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -375.0
+margin_top = -265.0
+margin_right = 375.0
+margin_bottom = 265.0
+custom_constants/separation = 150
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DecodeContainer"]
+margin_right = 300.0
+margin_bottom = 530.0
+rect_min_size = Vector2( 300, 500 )
+
+[node name="Label" type="Label" parent="DecodeContainer/VBoxContainer"]
+margin_right = 300.0
+margin_bottom = 26.0
+text = "Ciphered Text (Caesar Cipher)"
+
+[node name="CipherInput" type="TextEdit" parent="DecodeContainer/VBoxContainer"]
+margin_top = 30.0
+margin_right = 300.0
+margin_bottom = 530.0
+rect_min_size = Vector2( 300, 500 )
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="DecodeContainer"]
+margin_left = 450.0
+margin_right = 750.0
+margin_bottom = 530.0
+rect_min_size = Vector2( 300, 500 )
+
+[node name="Label" type="Label" parent="DecodeContainer/VBoxContainer2"]
+margin_right = 300.0
+margin_bottom = 26.0
+text = "Deciphered Text "
+
+[node name="CipherOutput" type="TextEdit" parent="DecodeContainer/VBoxContainer2"]
+margin_top = 30.0
+margin_right = 300.0
+margin_bottom = 530.0
+rect_min_size = Vector2( 300, 500 )
+readonly = true
+[connection signal="item_selected" from="ModeButton" to="." method="_on_ModeButton_item_selected"]
+[connection signal="text_changed" from="TranslationContainer/VBoxContainer/EnglishBox" to="." method="_on_EnglishBox_text_changed"]
+[connection signal="text_changed" from="TranslationContainer/VBoxContainer/CipherBox" to="." method="_on_CipherBox_text_changed"]
+[connection signal="text_changed" from="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer/CenterContainer2/KeyEdit" to="." method="_on_LineEdit_text_changed"]
+[connection signal="text_changed" from="DecodeContainer/VBoxContainer/CipherInput" to="." method="_on_CipherInput_text_changed"]

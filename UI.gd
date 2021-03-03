@@ -1,14 +1,16 @@
 extends Control
 
-onready var cipher_text = $HBoxContainer/VBoxContainer/CipherBox
-onready var normal_text = $HBoxContainer/VBoxContainer/EnglishBox
+onready var cipher_text = $TranslationContainer/VBoxContainer/CipherBox
+onready var normal_text = $TranslationContainer/VBoxContainer/EnglishBox
 
 var translation = ""
-var key = 0
+var translate_key = 0
 
 func _ready():
 	normal_text.text = ""
 	cipher_text.text = ""
+	$TranslationContainer.show()
+	$DecodeContainer.hide()
 
 	
 
@@ -22,9 +24,9 @@ func _on_CipherBox_text_changed():
 	update_boxes(false)
 
 func update_boxes(if_english):
-	if key > 0:
+	if translate_key > 0:
 		cipher_text.text = translation
-	elif key < 0:
+	elif translate_key < 0:
 		normal_text.text = translation
 	else:
 		if if_english:
@@ -35,22 +37,20 @@ func update_boxes(if_english):
 
 func decode(message):
 	translation = ""
-	key = abs(key)
-	translate(message)
+	translate_key = abs(translate_key)
+	translate(message, translate_key)
 	
 
 func encode(message):
 	translation = ""
-	key = abs(key) * -1
-	translate(message)
+	translate_key = abs(translate_key) * -1
+	translate(message, translate_key)
 
-func translate(message):
+func translate(message, key):
 	for letter in message:
 		if (ord(letter) >= ord("A") and ord(letter) <= ord("Z")) or (ord(letter) <= ord("z") and ord(letter) >= ord("a")):#checks to make sure it is a letter
 			var num = ord(letter)
-			print (str(num))
 			num += key
-			print(str(num))
 			if ord(letter) >= ord("A") and ord(letter) <= ord("Z"):#checks for capital
 				if num > ord("Z"):
 					num -= 26
@@ -69,10 +69,36 @@ func translate(message):
 func _on_LineEdit_text_changed(new_text):
 	for i in range (len(new_text)): #checks to make sure int is input
 		if not (ord(new_text[i]) < 58 and ord(new_text[i]) > 47):
-			$HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer/CenterContainer2/KeyEdit.clear()
+			$TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer/CenterContainer2/KeyEdit.clear()
 		else:
-			key = int($HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer/CenterContainer2/KeyEdit.text)
-			if key > 26:
-				key = 26
-				$HBoxContainer/CenterContainer/VBoxContainer2/HBoxContainer/CenterContainer2/KeyEdit.text = "26"
+			translate_key = int($TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer/CenterContainer2/KeyEdit.text)
+			if translate_key > 26:
+				translate_key = 26
+				$TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer/CenterContainer2/KeyEdit.text = "26"
 
+
+
+func _on_ModeButton_item_selected(index):
+	match index:
+		0:
+			$TranslationContainer.show()
+			$DecodeContainer.hide()
+		1:
+			$TranslationContainer.hide()
+			$DecodeContainer.show()
+
+#code for the decoder is below
+
+var translated_list = ""
+
+func _on_CipherInput_text_changed():
+	$DecodeContainer/VBoxContainer2/CipherOutput.text = ""
+	for i in range (26):
+		translation = ""
+		var decode_key = i
+		translate($DecodeContainer/VBoxContainer/CipherInput.text, decode_key)
+		translated_list += "Key " + str(i) + ": " + translation + "\n"
+	$DecodeContainer/VBoxContainer2/CipherOutput.text = "Translations by key: \n"
+	for j in translated_list:
+		$DecodeContainer/VBoxContainer2/CipherOutput.text += j
+		
