@@ -5,23 +5,48 @@ onready var normal_text = $TranslationContainer/VBoxContainer/EnglishBox
 
 var translation = ""
 var translate_key = 0
+var mono_key = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+var mono_cipher = {}
+var modes = ["sub", "mono"]
+var mode = modes[0]
 
 func _ready():
 	normal_text.text = ""
 	cipher_text.text = ""
+	modify_cipher()
 	$TranslationContainer.show()
 	$DecodeContainer.hide()
 
+func _on_CypherOptions_item_selected(index):
+	mode = modes[index]
+	match mode:
+		"sub":
+			$TranslationContainer/CenterContainer/VBoxContainer2/mono_key_container.hide()
+			$TranslationContainer/CenterContainer/VBoxContainer2/Sub_key_container.show()
+		"mono":
+			$TranslationContainer/CenterContainer/VBoxContainer2/mono_key_container.show()
+			$TranslationContainer/CenterContainer/VBoxContainer2/Sub_key_container.hide()
 	
 
 func _on_EnglishBox_text_changed():
-	decode(normal_text.text)
+	translation = ""
+	if mode == "sub":
+		encode(normal_text.text)
+	elif mode == "mono":
+		translate_key = 1
+		mono_encode(normal_text.text)
 	update_boxes(true)
 
 
 func _on_CipherBox_text_changed():
-	encode(cipher_text.text)
+	translation = ""
+	if mode == "sub":
+		decode(cipher_text.text)
+	elif mode == "mono":
+		translate_key = -1
+		mono_decode(cipher_text.text)
 	update_boxes(false)
+		
 
 func update_boxes(if_english):
 	if translate_key > 0:
@@ -35,14 +60,12 @@ func update_boxes(if_english):
 			normal_text.text = cipher_text.text
 		
 
-func decode(message):
-	translation = ""
+func encode(message):
 	translate_key = abs(translate_key)
 	translate(message, translate_key)
 	
 
-func encode(message):
-	translation = ""
+func decode(message):
 	translate_key = abs(translate_key) * -1
 	translate(message, translate_key)
 
@@ -67,14 +90,18 @@ func translate(message, key):
 			
 
 func _on_LineEdit_text_changed(new_text):
-	for i in range (len(new_text)): #checks to make sure int is input
-		if not (ord(new_text[i]) < 58 and ord(new_text[i]) > 47):
-			$TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer/CenterContainer2/KeyEdit.clear()
-		else:
-			translate_key = int($TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer/CenterContainer2/KeyEdit.text)
-			if translate_key > 26:
-				translate_key = 26
-				$TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer/CenterContainer2/KeyEdit.text = "26"
+	if mode == "sub":
+		for i in range (len(new_text)): #checks to make sure int is input
+			if not (ord(new_text[i]) < 58 and ord(new_text[i]) > 47):
+				$TranslationContainer/CenterContainer/VBoxContainer2/Sub_key_container/CenterContainer2/KeyEdit.clear()
+			else:
+				translate_key = int($TranslationContainer/CenterContainer/VBoxContainer2/Sub_key_container/CenterContainer2/KeyEdit.text)
+				if translate_key > 26:
+					translate_key = 26
+					$TranslationContainer/CenterContainer/VBoxContainer2/Sub_key_container/CenterContainer2/KeyEdit.text = "26"
+	elif mode == "mono":
+		mono_key = new_text.to_upper()
+		modify_cipher()
 
 
 
@@ -86,6 +113,35 @@ func _on_ModeButton_item_selected(index):
 		1:
 			$TranslationContainer.hide()
 			$DecodeContainer.show()
+
+#code for monoalphabetic is below
+
+func mono_encode(message):
+	message = message.to_upper()
+	for letter in message:
+		if ord(letter) >= ord("A") and ord(letter) <= ord("Z"):
+			translation += mono_cipher[letter]
+		else:
+			translation += letter
+		
+func mono_decode(message):
+	message = message.to_upper()
+	var keys = mono_cipher.keys()
+	var values = mono_cipher.values()
+	for letter in message:
+		if ord(letter) >= ord("A") and ord(letter) <= ord("Z"):
+			var index = values.find(letter)
+			translation += keys[index]
+		else:
+			translation += letter
+
+func modify_cipher():
+	mono_cipher = {}
+	var num = ord("A")
+	for letter in mono_key:
+		mono_cipher[char(num)] = letter
+		num += 1
+	print (mono_cipher)
 
 #code for the decoder is below
 
@@ -102,3 +158,4 @@ func _on_CipherInput_text_changed():
 	for j in translated_list:
 		$DecodeContainer/VBoxContainer2/CipherOutput.text += j
 		
+

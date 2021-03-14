@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://UI.gd" type="Script" id=1]
 [ext_resource path="res://TimeandSpace-Regular.ttf" type="DynamicFontData" id=2]
@@ -12,6 +12,12 @@ font_data = ExtResource( 2 )
 
 [sub_resource type="Theme" id=2]
 default_font = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 10
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
 
 [node name="UI" type="Control"]
 anchor_right = 1.0
@@ -45,7 +51,6 @@ __meta__ = {
 }
 
 [node name="TranslationContainer" type="HBoxContainer" parent="."]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -98,66 +103,105 @@ wrap_enabled = true
 
 [node name="CenterContainer" type="CenterContainer" parent="TranslationContainer"]
 margin_left = 780.0
-margin_right = 988.0
+margin_right = 984.0
 margin_bottom = 534.0
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="TranslationContainer/CenterContainer"]
 margin_top = 231.0
-margin_right = 208.0
+margin_right = 204.0
 margin_bottom = 303.0
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="TranslationContainer/CenterContainer/VBoxContainer2"]
-margin_right = 208.0
+margin_right = 204.0
 margin_bottom = 32.0
 
 [node name="Label" type="Label" parent="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer2"]
 margin_top = 3.0
-margin_right = 54.0
+margin_right = 50.0
 margin_bottom = 29.0
-text = "Cypher :"
+text = "Cipher :"
 
 [node name="CenterContainer" type="CenterContainer" parent="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer2"]
-margin_left = 58.0
-margin_right = 208.0
+margin_left = 54.0
+margin_right = 204.0
 margin_bottom = 32.0
 
 [node name="CypherOptions" type="OptionButton" parent="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer2/CenterContainer"]
 margin_right = 150.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 150, 32 )
-text = "Caesar"
-items = [ "Caesar", null, false, 0, null ]
+text = "Substitution"
+items = [ "Substitution", null, false, 0, null, "Monoalphabetic", null, false, 1, null ]
 selected = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TranslationContainer/CenterContainer/VBoxContainer2"]
+[node name="Sub_key_container" type="HBoxContainer" parent="TranslationContainer/CenterContainer/VBoxContainer2"]
 margin_top = 36.0
-margin_right = 208.0
+margin_right = 204.0
 margin_bottom = 72.0
 
-[node name="VSeparator" type="VSeparator" parent="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="TranslationContainer/CenterContainer/VBoxContainer2/Sub_key_container"]
 modulate = Color( 1, 1, 1, 0 )
 margin_right = 21.0
 margin_bottom = 36.0
 rect_min_size = Vector2( 21, 0 )
 
-[node name="Label" type="Label" parent="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer"]
+[node name="Label" type="Label" parent="TranslationContainer/CenterContainer/VBoxContainer2/Sub_key_container"]
 margin_left = 25.0
 margin_top = 5.0
 margin_right = 56.0
 margin_bottom = 31.0
 text = "Key: "
 
-[node name="CenterContainer2" type="CenterContainer" parent="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer"]
+[node name="CenterContainer2" type="CenterContainer" parent="TranslationContainer/CenterContainer/VBoxContainer2/Sub_key_container"]
 margin_left = 60.0
 margin_right = 106.0
 margin_bottom = 36.0
 
-[node name="KeyEdit" type="LineEdit" parent="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer/CenterContainer2"]
+[node name="KeyEdit" type="LineEdit" parent="TranslationContainer/CenterContainer/VBoxContainer2/Sub_key_container/CenterContainer2"]
 margin_right = 46.0
 margin_bottom = 36.0
 placeholder_text = "0"
 
+[node name="mono_key_container" type="HBoxContainer" parent="TranslationContainer/CenterContainer/VBoxContainer2"]
+visible = false
+margin_top = 76.0
+margin_right = 209.0
+margin_bottom = 112.0
+
+[node name="VSeparator" type="VSeparator" parent="TranslationContainer/CenterContainer/VBoxContainer2/mono_key_container"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 21.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 21, 0 )
+
+[node name="Label" type="Label" parent="TranslationContainer/CenterContainer/VBoxContainer2/mono_key_container"]
+margin_left = 25.0
+margin_top = 5.0
+margin_right = 56.0
+margin_bottom = 31.0
+text = "Key: "
+
+[node name="CenterContainer2" type="CenterContainer" parent="TranslationContainer/CenterContainer/VBoxContainer2/mono_key_container"]
+margin_left = 60.0
+margin_right = 106.0
+margin_bottom = 36.0
+
+[node name="KeyEdit" type="LineEdit" parent="TranslationContainer/CenterContainer/VBoxContainer2/mono_key_container/CenterContainer2"]
+margin_right = 46.0
+margin_bottom = 36.0
+hint_tooltip = "Copy paste a 26 letter cipher into this box"
+placeholder_text = "0"
+
+[node name="Label2" type="Label" parent="TranslationContainer/CenterContainer/VBoxContainer2/mono_key_container"]
+margin_left = 110.0
+margin_top = 11.0
+margin_right = 209.0
+margin_bottom = 24.0
+custom_fonts/font = SubResource( 3 )
+text = "(Please copy paste your key)"
+
 [node name="DecodeContainer" type="HBoxContainer" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -180,7 +224,7 @@ rect_min_size = Vector2( 300, 500 )
 [node name="Label" type="Label" parent="DecodeContainer/VBoxContainer"]
 margin_right = 300.0
 margin_bottom = 26.0
-text = "Ciphered Text (Caesar Cipher)"
+text = "Ciphered Text (Substitution Cipher)"
 
 [node name="CipherInput" type="TextEdit" parent="DecodeContainer/VBoxContainer"]
 margin_top = 30.0
@@ -208,5 +252,7 @@ readonly = true
 [connection signal="item_selected" from="ModeButton" to="." method="_on_ModeButton_item_selected"]
 [connection signal="text_changed" from="TranslationContainer/VBoxContainer/EnglishBox" to="." method="_on_EnglishBox_text_changed"]
 [connection signal="text_changed" from="TranslationContainer/VBoxContainer/CipherBox" to="." method="_on_CipherBox_text_changed"]
-[connection signal="text_changed" from="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer/CenterContainer2/KeyEdit" to="." method="_on_LineEdit_text_changed"]
+[connection signal="item_selected" from="TranslationContainer/CenterContainer/VBoxContainer2/HBoxContainer2/CenterContainer/CypherOptions" to="." method="_on_CypherOptions_item_selected"]
+[connection signal="text_changed" from="TranslationContainer/CenterContainer/VBoxContainer2/Sub_key_container/CenterContainer2/KeyEdit" to="." method="_on_LineEdit_text_changed"]
+[connection signal="text_changed" from="TranslationContainer/CenterContainer/VBoxContainer2/mono_key_container/CenterContainer2/KeyEdit" to="." method="_on_LineEdit_text_changed"]
 [connection signal="text_changed" from="DecodeContainer/VBoxContainer/CipherInput" to="." method="_on_CipherInput_text_changed"]
