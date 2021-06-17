@@ -141,7 +141,6 @@ func modify_cipher():
 	for letter in mono_key:
 		mono_cipher[char(num)] = letter
 		num += 1
-	print (mono_cipher)
 
 #code for the decoder is below
 
