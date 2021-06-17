@@ -149,11 +149,12 @@ var translated_list = ""
 
 func _on_CipherInput_text_changed():
 	$DecodeContainer/VBoxContainer2/CipherOutput.text = ""
+	translated_list = ""
 	for i in range (26):
 		translation = ""
 		var decode_key = i
 		translate($DecodeContainer/VBoxContainer/CipherInput.text, decode_key)
-		translated_list += "Key " + str(i) + ": " + translation + "\n"
+		translated_list += "Key " + str(26-i) + ": " + translation + "\n"
 	$DecodeContainer/VBoxContainer2/CipherOutput.text = "Translations by key: \n"
 	for j in translated_list:
 		$DecodeContainer/VBoxContainer2/CipherOutput.text += j

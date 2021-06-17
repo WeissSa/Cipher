@@ -201,7 +201,6 @@ custom_fonts/font = SubResource( 3 )
 text = "(Please copy paste your key)"
 
 [node name="DecodeContainer" type="HBoxContainer" parent="."]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -249,6 +248,7 @@ margin_right = 300.0
 margin_bottom = 530.0
 rect_min_size = Vector2( 300, 500 )
 readonly = true
+
 [connection signal="item_selected" from="ModeButton" to="." method="_on_ModeButton_item_selected"]
 [connection signal="text_changed" from="TranslationContainer/VBoxContainer/EnglishBox" to="." method="_on_EnglishBox_text_changed"]
 [connection signal="text_changed" from="TranslationContainer/VBoxContainer/CipherBox" to="." method="_on_CipherBox_text_changed"]
